@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import axios from "axios";
 import { UserContext } from "../UserContext";
+// importy 
 import Sponsors from "./Sponsors";
 
 export default function AddEvent() {
