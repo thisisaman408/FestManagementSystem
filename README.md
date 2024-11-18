@@ -150,6 +150,16 @@ AI Recommendations: Enter a budget to get optimized event recommendations within
 
 📸 Screenshots 
 Screenshots showcasing the dashboard, event management, and ML outputs will be displayed here.
+<img width="1380" alt="Screenshot 2024-11-18 at 5 56 36 PM" src="https://github.com/user-attachments/assets/64f9dabc-39fe-4630-8daf-3443efdae933">
+
+<img width="1380" alt="Screenshot 2024-11-18 at 5 57 01 PM" src="https://github.com/user-attachments/assets/bb911d60-5a15-488f-b708-13b5065b13e9">
+<img width="1456" alt="Screenshot 2024-11-18 at 5 57 55 PM" src="https://github.com/user-attachments/assets/3bc3266b-71cb-4048-ac30-9334c1d3c92a">
+<img width="1456" alt="Screenshot 2024-11-18 at 5 57 43 PM" src="https://github.com/user-attachments/assets/16e9fea3-4491-4dc0-b4dc-9badd6427978">
+<img width="1456" alt="Screenshot 2024-11-18 at 5 57 32 PM" src="https://github.com/user-attachments/assets/f6a95fc9-3726-406b-8e66-caca9134837c">
+<img width="1456" alt="Screenshot 2024-11-18 at 5 57 25 PM" src="https://github.com/user-attachments/assets/c0c5040c-5eb3-4bde-89f7-4718e0636cac">
+<img width="1456" alt="Screenshot 2024-11-18 at 5 57 14 PM" src="https://github.com/user-attachments/assets/e0aaacb1-3fdb-40f2-b137-f24b72be7cee">
+
+
 
 🤝 Contributing 
 We welcome contributions! Feel free to open issues or submit pull requests to improve the system.
