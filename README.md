@@ -66,27 +66,8 @@ The **Fest Management System** is an **Admin Dashboard** built to optimize and m
 
 ## 🏗️ Project Structure
 
-├── ML
-│   ├── Data
-│   │   ├── College_Fest_Review_data_set.csv
-│   │   ├── college_events_data.csv
-│   │   └── expanded_college_events_data.csv
-│   ├── main.py
-│   ├── processed_events.csv
-│   ├── processed_with_scores.csv
-│   ├── requirements.txt
-│   ├── result.py
-│   └── run.py
-├── api
-│   ├── index.js
-│   ├── models
-│   │   ├── Ticket.js
-│   │   └── User.js
-│   └── uploads
-├── client
-│   ├── src
-│   ├── public
-└── README.md
+<img width="336" alt="image" src="https://github.com/user-attachments/assets/264ccb9d-ef94-4fdf-9922-91059f9ee82c">
+
 
 Frontend
 - DashboardPage.jsx: Displays event summaries and analytics.
