@@ -6,6 +6,7 @@ import { UserContextProvider } from "./UserContext";
 
 import Layout from "./Layout";
 import IndexPage from "./pages/IndexPage";
+// import
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import UserAccountPage from "./pages/UserAccountPage";
