@@ -1,0 +1,11 @@
+Event ID,Event Name,Event Type,Budget (INR),Popularity Score (1-10),Attendance,Hashtag Mentions,Student Feedback Score (1-10)
+1,Tech Talk on AI,Workshop,20000,8,300,1500,8
+2,Cultural Dance Night,Cultural Show,40000,9,500,3000,9
+3,Coding Hackathon,Competition,50000,7,200,1800,7
+4,Stand-Up Comedy Show,Entertainment,30000,6,400,2100,6
+5,Food Fest,Social Event,60000,9,600,3500,9
+6,E-sports Tournament,Competition,45000,8,350,2500,8
+7,Motivational Talk,Guest Lecture,15000,7,150,1200,7
+8,Art & Photography Fest,Exhibition,25000,6,250,1300,6
+9,Music Band Night,Concert,70000,10,700,4000,10
+10,Science Exhibition,Exhibition,35000,5,200,1000,5
