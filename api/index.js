@@ -264,8 +264,8 @@ app.post("/ml/recommend", (req, res) => {
       .json({ error: "Invalid or negative budget provided" });
   }
 
-  const pythonPath = path.join(__dirname, "..", "ML", "venv", "bin", "python3");
-  const pythonScriptPath = path.join(__dirname, "..", "ML", "run.py");
+  const pythonPath = "python3";
+  const pythonScriptPath = path.join(__dirname, "ML", "run.py");
   const pythonProcess = spawn(pythonPath, [pythonScriptPath, budget], {
     env: {
       ...process.env,
@@ -314,6 +314,12 @@ app.post("/ml/recommend", (req, res) => {
       .status(500)
       .json({ error: "Process execution error", details: err.message });
   });
+});
+app.use(express.static(path.join(__dirname, "public")));
+
+//thsi one to generate and use the static files for the client side.
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 const PORT = process.env.PORT || 4000;
