@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import logo from '../assets/logo.png';
-import signuppic from '../assets/signuppic.png';
+import signuppic from '../assets/signuppic.svg';
 export default function RegisterPage() {
 	const [name, setName] = useState('');
 	const [email, setEmail] = useState('');

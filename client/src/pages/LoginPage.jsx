@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import { UserContext } from '../UserContext';
 import logo from '../assets/logo.png';
-import signinpic from '../assets/signinpic.png';
+import signinpic from '../assets/signinpic.svg';
 export default function LoginPage() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');

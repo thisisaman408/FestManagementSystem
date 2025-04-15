@@ -5,7 +5,7 @@ import { BiLike } from 'react-icons/bi';
 import { BsArrowRightShort } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import hero from '../assets/hero.jpg';
-import padaru from '../assets/padaru.png';
+import paduru from '../assets/paduru.png';
 export default function IndexPage() {
 	const [events, setEvents] = useState([]);
 
@@ -79,7 +79,7 @@ export default function IndexPage() {
 										</div>
 
 										<img
-											src={padaru}
+											src={paduru}
 											alt=""
 											className="rounded-tl-[0.75rem] rounded-tr-[0.75rem] rounded-br-[0] rounded-bl-[0] object-fill aspect-16:9"
 										/>
