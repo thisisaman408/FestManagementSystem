@@ -19,7 +19,11 @@ RUN pip3 install -r api/ML/requirements.txt
 
 
 COPY client ./client
-RUN cd client && npm install && npm run build
+WORKDIR /app/client
+RUN npm ci
+RUN npm run build
+WORKDIR /app
+
 
 
 RUN mkdir -p api/public && cp -r client/dist/* api/public/
