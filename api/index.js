@@ -323,6 +323,18 @@ app.get("*", (req, res) => {
 });
 
 const PORT = process.env.PORT || 4000;
+
+const fs = require("fs");
+
+console.log("Checking public directory content...");
+fs.readdir(path.join(__dirname, "public"), (err, files) => {
+  if (err) {
+    console.error("Public folder error:", err);
+  } else {
+    console.log("Public folder contains:", files);
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
