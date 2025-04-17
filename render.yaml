@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: festmanage
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: PORT
+        value: 4000
+      - key: MONGO_URL
+        value: 'mongodb+srv://admin-aman:sFjhEKfgaK8j4R7v@cluster0.hjzrf.mongodb.net/FEST'
+      - key: PATH
+        value: './ML/run.py'
+      - key : GROQ_API_KEY
+        value: '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
