@@ -1,0 +1,31 @@
+Event ID,Event Name,Event Type,Budget (INR),Popularity Score (1-10),Attendance,Hashtag Mentions,Student Feedback Score (1-10),AvgPositiveSentiment,ReviewCount
+1,Tech Talk on AI,Workshop,20000,8,300,1500,8,0.5,0
+2,Cultural Dance Night,Cultural Show,40000,9,500,3000,9,0.5,0
+3,Coding Hackathon,Competition,50000,7,200,1800,7,0.5,0
+4,Stand-Up Comedy Show,Entertainment,30000,6,400,2100,6,0.5,0
+5,Food Fest,Social Event,60000,9,600,3500,9,0.5,0
+6,E-sports Tournament,Competition,45000,8,350,2500,8,0.5,0
+7,Motivational Talk,Guest Lecture,15000,7,150,1200,7,0.5,0
+8,Art & Photography Fest,Exhibition,25000,6,250,1300,6,0.5,0
+9,Music Band Night,Concert,70000,10,700,4000,10,0.5,0
+10,Science Exhibition,Exhibition,35000,5,200,1000,5,0.9995319644610087,12
+11,Robotics Workshop,Workshop,30000,8,250,2000,7,0.5866560935974121,15
+12,Film Screening,Entertainment,20000,6,300,1100,6,0.5,0
+13,Game Development Jam,Competition,40000,7,180,1800,8,0.5,0
+14,Literature Fest,Cultural Show,45000,9,400,2200,8,0.5,0
+15,Fashion Show,Fashion Show,50000,8,350,2500,8,0.5,0
+16,Debate Competition,Competition,25000,6,280,1900,6,0.8742945169949013,345
+17,Sports Day,Sports,60000,9,650,3600,9,0.5,0
+18,Career Fair,Social Event,70000,10,700,4000,10,0.9995562114768265,181
+19,Poetry Slam,Cultural Show,20000,7,200,1700,7,0.5,0
+20,Engineering Showcase,Exhibition,45000,8,350,2100,8,0.5,0
+21,Dance Battle,Competition,30000,7,300,1500,7,0.5,0
+22,Photography Contest,Exhibition,15000,6,150,1200,6,0.5,0
+23,Singing Competition,Competition,25000,8,250,2000,8,0.5,0
+24,Book Fair,Exhibition,20000,5,200,1000,6,0.5,0
+25,Environmental Workshop,Workshop,25000,6,230,1100,7,0.5,0
+26,Drone Racing,Competition,45000,8,320,2500,9,0.5,0
+27,Startup Pitch Fest,Social Event,40000,9,500,2900,8,0.5,0
+28,Short Film Contest,Competition,35000,6,240,1700,6,0.5,0
+29,Drama Night,Cultural Show,25000,7,270,2200,8,0.5,0
+30,Meme Competition,Entertainment,15000,5,180,1400,5,0.5,0

@@ -1,5 +1,8 @@
+# requirements.txt
+
 pandas
-numpy
-scikit-learn
-textblob
+torch
 transformers
+numpy
+groq
+python-dotenv

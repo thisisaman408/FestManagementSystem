@@ -1,6 +1,42 @@
+# .dockerignore
+
+# Git specific
+.git
+.gitignore
+
+# Node modules
 node_modules
-client/node_modules
-api/node_modules
-*.log
-*.DS_Store
-dist
+*/node_modules
+
+# Python virtual environment
+venv
+*/venv
+*.pyc
+__pycache__
+
+# Environment files (should be passed at runtime)
+.env
+*/*.env
+
+# Build artifacts / generated files
+client/dist
+client/build
+api/ML/events_with_aggregated_data.csv
+api/ML/processed_events.csv
+api/ML/processed_with_scores.csv
+
+# Runtime data / uploads
+api/uploads
+
+# OS specific
+.DS_Store
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Docker specific
+Dockerfile
+.dockerignore
+
+# Config files potentially containing secrets or local paths
+vite.config.js.timestamp*

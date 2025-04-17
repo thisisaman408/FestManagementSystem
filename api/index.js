@@ -256,17 +256,37 @@ app.delete("/tickets/:id", async (req, res) => {
 
 // POST endpoint to get AI recommendations based on the budget
 app.post("/ml/recommend", (req, res) => {
-  const { budget } = req.body;
+  const inputData = req.body;
+  console.log("Received input data:", inputData);
 
+  // Validate input data
+  if (!inputData || typeof inputData !== 'object') {
+    return res.status(400).json({ error: "Invalid input data. Expected a JSON object." });
+  }
+
+  const { budget, min_events, event_types, min_popularity } = inputData;
   if (!budget || isNaN(budget) || Number(budget) <= 0) {
-    return res
-      .status(400)
-      .json({ error: "Invalid or negative budget provided" });
+    return res.status(400).json({ error: "Invalid or missing budget. Budget must be a positive number." });
+  }
+
+  // Optional parameter validation
+  const validatedInput = { budget: Number(budget) };
+  if (min_events && !isNaN(min_events) && Number(min_events) > 0) {
+    validatedInput.min_events = Number(min_events);
+  }
+  if (event_types && Array.isArray(event_types) && event_types.length > 0) {
+    validatedInput.event_types = event_types;
+  }
+  if (min_popularity && !isNaN(min_popularity) && Number(min_popularity) >= 0) {
+    validatedInput.min_popularity = Number(min_popularity);
   }
 
   const pythonPath = "python3";
   const pythonScriptPath = path.join(__dirname, "ML", "run.py");
-  const pythonProcess = spawn(pythonPath, [pythonScriptPath, budget], {
+  const jsonInput = JSON.stringify(validatedInput);
+
+  const pythonProcess = spawn(pythonPath, [pythonScriptPath, jsonInput], {
+    cwd: path.join(__dirname, "ML"), // Set working directory to api/ML/
     env: {
       ...process.env,
       PATH: process.env.PATH,
@@ -310,9 +330,7 @@ app.post("/ml/recommend", (req, res) => {
 
   pythonProcess.on("error", (err) => {
     console.error(`[Process Error]: ${err.message}`);
-    res
-      .status(500)
-      .json({ error: "Process execution error", details: err.message });
+    res.status(500).json({ error: "Process execution error", details: err.message });
   });
 });
 app.use(express.static(path.join(__dirname, "public")));
