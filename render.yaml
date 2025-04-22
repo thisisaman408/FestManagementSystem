@@ -27,7 +27,7 @@ services:
       # Render injects it and maps external traffic to it.
       # Your Node app should listen on process.env.PORT or 4000 if not set.
 
-    -ports:
+    ports:
       - 4000 # Expose port 4000 as defined in Dockerfile.api
 
     # Configure a Persistent Disk for the uploads directory
@@ -49,7 +49,7 @@ services:
     # startCommand: # Optional: Render uses the CMD from your Dockerfile (Nginx)
 
     # Define dependency on the API service
-    -dependsOn:
+    dependsOn:
       - api
 
     envVars:
@@ -64,8 +64,8 @@ services:
       # - key: REACT_APP_API_URL
       #   value: ${{ RENDER_EXTERNAL_URL_api }} # Referencing the API service's external URL
 
-      -ports:
-        - 80 # Expose port 80 as defined in Dockerfile.client
+    ports:
+      - 80 # Expose port 80 as defined in Dockerfile.client
 
 
     # Optional: Add a health check path (e.g., if Nginx serves a specific status page)
