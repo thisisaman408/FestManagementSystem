@@ -46,4 +46,4 @@ ENV PORT=4000
 EXPOSE 4000
 
 # Start the server (index.js should use process.env.PORT || 4000)
-CMD ["npm", "start"]
+CMD ["sh", "-c", "echo 'Starting API server...' && ls -al && npm start"]
