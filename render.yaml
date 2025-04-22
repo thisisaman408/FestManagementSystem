@@ -1,15 +1,72 @@
+# render.yaml at the root of your repository
+
 services:
-  - type: web
-    name: festmanage
-    env: docker
-    plan: free
-    dockerfilePath: ./Dockerfile
+  # API Service Definition
+  - name: api
+    type: web # Use 'web' type for services that listen for incoming HTTP requests
+    region: oregon # Choose a region closest to your users
+    plan: free # Or starter, standard, etc.
+    dockerfilePath: Dockerfile.api # Points to your Dockerfile
+    # buildCommand: # Optional: Render handles the build if dockerfilePath is set
+    # startCommand: # Optional: Render uses the CMD from your Dockerfile
     envVars:
-      - key: PORT
-        value: 4000
+      - key: NODE_ENV
+        value: production
+      # Use Render's secret management for sensitive variables.
+      # Define these in the Render dashboard UI when creating the blueprint,
+      # or use Render's secret files feature if you have many.
+      # Placeholder example - REPLACE with actual secret configuration in Render UI:
       - key: MONGO_URL
+        sync: false # Indicate this is a sensitive value set in Render UI
+      - key: JWT_SECRET
         sync: false
-      - key: PATH
-        value: './ML/run.py'
       - key: GROQ_API_KEY
         sync: false
+      # PORT is automatically handled by Render mapping the exposed container port
+      # - key: PORT # You don't typically need to set PORT as an env var in Render,
+      # Render injects it and maps external traffic to it.
+      # Your Node app should listen on process.env.PORT or 4000 if not set.
+
+    ports:
+      - 4000 # Expose port 4000 as defined in Dockerfile.api
+
+    # Configure a Persistent Disk for the uploads directory
+    disk:
+      name: api-uploads # A name for your disk
+      mountPath: /app/uploads # This MUST match the directory in your Dockerfile and volume mount
+      sizeGB: 1 # Allocate disk space (adjust as needed)
+
+    # Optional: Add a health check path if your API has one (e.g., /healthz)
+    # healthCheckPath: /healthz
+
+  # Client Service Definition
+  - name: client
+    type: web # Use 'web' type for the frontend served by Nginx
+    region: oregon # Should ideally be the same region as the API
+    plan: free # Or starter, standard, etc.
+    dockerfilePath: Dockerfile.client # Points to your Dockerfile
+    # buildCommand: # Optional: Render handles the build
+    # startCommand: # Optional: Render uses the CMD from your Dockerfile (Nginx)
+
+    # Define dependency on the API service
+    dependsOn:
+      - api
+
+    envVars:
+      # If your client needs the API URL, you might define it here.
+      # You can refer to the internal service name: http://api.internal.render.com
+      # Or inject it during the build based on the deployed API URL.
+      # This depends heavily on how your frontend consumes the API URL.
+      # Example (adapt as needed):
+      # - key: REACT_APP_API_URL # Or VITE_APP_API_URL etc.
+      #   value: http://api.internal.render.com # Internal Render network
+      # Or use the external URL if calls are made from the browser
+      # - key: REACT_APP_API_URL
+      #   value: ${{ RENDER_EXTERNAL_URL_api }} # Referencing the API service's external URL
+
+    ports:
+      - 80 # Expose port 80 as defined in Dockerfile.client
+
+
+    # Optional: Add a health check path (e.g., if Nginx serves a specific status page)
+    # healthCheckPath: /status.html # Example
