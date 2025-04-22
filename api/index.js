@@ -9,24 +9,25 @@ const cookieParser = require("cookie-parser");
 const { spawn } = require("child_process");
 const multer = require("multer");
 const path = require("path");
-
 const Ticket = require("./models/Ticket");
 
 const app = express();
 
 const bcryptSalt = bcrypt.genSaltSync(10);
-const jwtSecret = "bsbsfbrnsftentwnnwnwn";
+const jwtSecret = process.env.JWT_SECRET || "bsbsfbrnsftentwnnwnwn";
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(
-  cors({
-    credentials: true,
-    origin: "http://localhost:5173",
-  })
-);
+app.use(cors({ credentials: true, origin: true })); // Allow client origin
 
-mongoose.connect(process.env.MONGO_URL);
+if (!process.env.MONGO_URL) {
+  console.error("Error: MONGO_URL is not defined");
+} else {
+  mongoose
+    .connect(process.env.MONGO_URL)
+    .then(() => console.log("MongoDB connected"))
+    .catch((err) => console.error("MongoDB connection error:", err));
+}
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -45,7 +46,6 @@ app.get("/test", (req, res) => {
 
 app.post("/register", async (req, res) => {
   const { name, email, password } = req.body;
-
   try {
     const userDoc = await UserModel.create({
       name,
@@ -60,23 +60,16 @@ app.post("/register", async (req, res) => {
 
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
-
   const userDoc = await UserModel.findOne({ email });
-
   if (!userDoc) {
     return res.status(404).json({ error: "User not found" });
   }
-
   const passOk = bcrypt.compareSync(password, userDoc.password);
   if (!passOk) {
     return res.status(401).json({ error: "Invalid password" });
   }
-
   jwt.sign(
-    {
-      email: userDoc.email,
-      id: userDoc._id,
-    },
+    { email: userDoc.email, id: userDoc._id },
     jwtSecret,
     {},
     (err, token) => {
@@ -158,13 +151,11 @@ app.get("/event/:id", async (req, res) => {
 
 app.post("/event/:eventId", (req, res) => {
   const eventId = req.params.eventId;
-
   Event.findById(eventId)
     .then((event) => {
       if (!event) {
         return res.status(404).json({ message: "Event not found" });
       }
-
       event.likes += 1;
       return event.save();
     })
@@ -232,7 +223,6 @@ app.get("/tickets/:id", async (req, res) => {
 
 app.get("/tickets/user/:userId", (req, res) => {
   const userId = req.params.userId;
-
   Ticket.find({ userid: userId })
     .then((tickets) => {
       res.json(tickets);
@@ -254,22 +244,16 @@ app.delete("/tickets/:id", async (req, res) => {
   }
 });
 
-// POST endpoint to get AI recommendations based on the budget
 app.post("/ml/recommend", (req, res) => {
   const inputData = req.body;
   console.log("Received input data:", inputData);
-
-  // Validate input data
   if (!inputData || typeof inputData !== 'object') {
     return res.status(400).json({ error: "Invalid input data. Expected a JSON object." });
   }
-
   const { budget, min_events, event_types, min_popularity } = inputData;
   if (!budget || isNaN(budget) || Number(budget) <= 0) {
     return res.status(400).json({ error: "Invalid or missing budget. Budget must be a positive number." });
   }
-
-  // Optional parameter validation
   const validatedInput = { budget: Number(budget) };
   if (min_events && !isNaN(min_events) && Number(min_events) > 0) {
     validatedInput.min_events = Number(min_events);
@@ -280,32 +264,26 @@ app.post("/ml/recommend", (req, res) => {
   if (min_popularity && !isNaN(min_popularity) && Number(min_popularity) >= 0) {
     validatedInput.min_popularity = Number(min_popularity);
   }
-
   const pythonPath = "python3";
   const pythonScriptPath = path.join(__dirname, "ML", "run.py");
   const jsonInput = JSON.stringify(validatedInput);
-
   const pythonProcess = spawn(pythonPath, [pythonScriptPath, jsonInput], {
-    cwd: path.join(__dirname, "ML"), // Set working directory to api/ML/
+    cwd: path.join(__dirname, "ML"),
     env: {
       ...process.env,
       PATH: process.env.PATH,
     },
   });
-
   let output = "";
   let errorOutput = "";
-
   pythonProcess.stdout.on("data", (data) => {
     output += data.toString();
     console.log(`[Python stdout]: ${data}`);
   });
-
   pythonProcess.stderr.on("data", (data) => {
     errorOutput += data.toString();
     console.error(`[Python stderr]: ${data}`);
   });
-
   pythonProcess.on("close", (code) => {
     if (code === 0) {
       try {
@@ -327,40 +305,13 @@ app.post("/ml/recommend", (req, res) => {
       });
     }
   });
-
   pythonProcess.on("error", (err) => {
     console.error(`[Process Error]: ${err.message}`);
     res.status(500).json({ error: "Process execution error", details: err.message });
   });
 });
-app.use(express.static(path.join(__dirname, "public")));
-
-//thsi one to generate and use the static files for the client side.
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
-});
 
 const PORT = process.env.PORT || 4000;
-
-const fs = require("fs");
-
-console.log("Checking public directory content...");
-fs.readdir(path.join(__dirname, "public"), (err, files) => {
-  if (err) {
-    console.error("Public folder error:", err);
-  } else {
-    console.log("Public folder contains:", files);
-  }
-});
-
-app.get("/", (req, res) => {
-  res.send("Server running!");
-});
-
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
-});
-
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`API is running on port ${PORT}`);
 });

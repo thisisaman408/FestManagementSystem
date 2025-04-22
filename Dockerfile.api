@@ -1,0 +1,33 @@
+FROM node:18
+
+# Install Python3, venv, pip, and build tools
+RUN apt-get update && \
+    apt-get install -y python3 python3-venv python3-pip build-essential libpython3-dev bash && \
+    rm -rf /var/lib/apt/lists/*
+
+# Create and activate Python virtual environment
+RUN python3 -m venv /opt/venv
+ENV PATH="/opt/venv/bin:${PATH}"
+
+WORKDIR /app
+COPY api/package.json api/package-lock.json ./
+RUN npm ci --only=production
+COPY api/ML/requirements.txt ./ML/
+RUN pip install --no-cache-dir -r ML/requirements.txt
+COPY api/ ./
+
+# Create uploads directory for Multer
+RUN mkdir -p uploads
+
+# Debug: List files and Python packages
+RUN ls -la /app /app/uploads
+RUN pip list
+
+# Explicitly reset ENTRYPOINT
+ENTRYPOINT []
+
+ENV PORT=4000
+EXPOSE 4000
+
+# Start the Node.js app directly
+CMD ["node", "index.js"]

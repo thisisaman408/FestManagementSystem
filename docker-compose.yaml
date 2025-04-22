@@ -1,0 +1,28 @@
+services:
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile.client
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+    environment:
+      - NO_COLOR=true
+      - TERM=dumb
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    ports:
+      - "4000:4000"
+    environment:
+      - MONGO_URL=${MONGO_URL}
+      - JWT_SECRET=${JWT_SECRET}
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - NODE_ENV=production
+      - NO_COLOR=true
+      - TERM=dumb
+    volumes:
+      - ./api/uploads:/app/uploads
