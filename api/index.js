@@ -353,6 +353,14 @@ fs.readdir(path.join(__dirname, "public"), (err, files) => {
   }
 });
 
+app.get("/", (req, res) => {
+  res.send("Server running!");
+});
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
